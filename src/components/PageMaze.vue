@@ -19,23 +19,23 @@
             'page-maze-controller-button--disabled': !hasNeighbor('up')
           }"
           @click="handleControllerClick('up')"
-        >上</button>
+        >↑</button>
       </div>
-      <div class="page-maze-controller-group">
+      <div class="page-maze-controller-group page-maze-controller-group--middle">
         <button
           :class="{
             'page-maze-controller-button': true,
             'page-maze-controller-button--disabled': !hasNeighbor('left')
           }"
           @click="handleControllerClick('left')"
-        >左</button>
+        >←</button>
         <button
           :class="{
             'page-maze-controller-button': true,
             'page-maze-controller-button--disabled': !hasNeighbor('right')
           }"
           @click="handleControllerClick('right')"
-        >右</button>
+        >→</button>
       </div>
       <div class="page-maze-controller-group">
         <button
@@ -44,7 +44,7 @@
             'page-maze-controller-button--disabled': !hasNeighbor('down')
           }"
           @click="handleControllerClick('down')"
-        >下</button>
+        >↓</button>
       </div>
     </div>
   </div>
@@ -193,24 +193,31 @@ export default {
     position: fixed;
     right: 0;
     bottom: 0;
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
+    margin: 10px;
     .page-maze-controller-group {
       position: relative;
-      width: 150px;
-      height: 50px;
+      width: 120px;
+      height: 40px;
       display: flex;
       justify-content: space-around;
       align-items: center;
     }
+    .page-maze-controller-group--middle {
+      justify-content: space-between;
+    }
     .page-maze-controller-button {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background-color: #ffffff;
     }
     .page-maze-controller-button--disabled {
       pointer-events: none;
       color: #898989;
-      opacity: 0.3;
+      opacity: 0.2;
     }
   }
 }

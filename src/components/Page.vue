@@ -17,7 +17,7 @@
           'page-image-complete--active': imageCompleted,
         }"
       >
-        <img width="350px" :src="pageInfo.cover" :alt="pageInfo.title">
+        <img :width="pageImageSize + 'px'" :src="pageInfo.cover" :alt="pageInfo.title">
       </div>
       <canvas
         :id="'page-image' + id"
@@ -29,7 +29,7 @@
     </div>
     <div class="page-body">
       <div class="page-title">
-        <h3>{{pageInfo.title}}</h3>
+        <h1>{{pageInfo.title}}</h1>
       </div>
       <div class="page-description">
         <p>{{pageInfo.description}}</p>
@@ -66,6 +66,12 @@ export default {
     };
   },
   computed: {
+    isMob() {
+      return window.innerWidth < 769 ? true : false;
+    },
+    pageImageSize() {
+      return this.isMob ? 200 : 360
+    },
     ON_THIS_PAGE() {
       return this.currentCoords.x === this.pageInfo.x && this.currentCoords.y === this.pageInfo.y;
     },
@@ -79,8 +85,8 @@ export default {
       const canvas = document.getElementById("page-image" + vm.id);
       const context = canvas.getContext("2d");
       const img = new Image();
-      const particules_max = 3000;
-      const paritcule_size = 5;
+      const particules_max = 1500;
+      const paritcule_size = 8;
       let particlesDistance = 0;
       let pixelCoordinates, pixels, raf;
 
@@ -95,7 +101,17 @@ export default {
         img.src = vm.pageInfo.cover;
 
         img.onload = function() {
-          context.drawImage(img, 0, 0, img.width, img.height, 140, 0, 350, 350);
+          context.drawImage(
+            img,
+            0,
+            0,
+            img.width,
+            img.height,
+            (img.width - vm.pageImageSize) / 2,
+            (img.height- vm.pageImageSize) / 2,
+            vm.pageImageSize,
+            vm.pageImageSize
+          );
           getImageData();
         };
       }
@@ -165,7 +181,7 @@ export default {
 
         if (vm.ON_THIS_PAGE) {
           onMouseMove(Math.min(particlesDistance += 0.03, 1));
-          vm.imageCompleted = particlesDistance >= 0.8 ? true : false ;
+          vm.imageCompleted = particlesDistance >= 0.7 ? true : false ;
         }
         else {
           vm.imageCompleted = false;
@@ -238,21 +254,27 @@ export default {
   color: #ffffff;
   text-align: center;
   .page-image {
-    position: relative;;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 50%;
+    height: 100%;
     .page-image-complete {
       position: absolute;
-      top: 36%;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 50vh;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
     .page-image-complete--active {
       opacity: 1;
-      transform: scale(1.2);
+      transform: scale(1.1);
+      transform-origin: 50% 50%;
     }
     .page-image-canvas {
       transition: opacity 1s ease-in-out;    
@@ -264,8 +286,23 @@ export default {
   .page-body {
     position: relative;;
     width: 100%;
-    height: 50%;
+    height: 100%;
     padding: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    @media only screen and (min-width: 769px){
+      justify-content: space-between;
+    }
+    .page-title {
+      h1 {
+        font-size: 42px;
+      }
+      margin-bottom: 20px;
+    }
+    .page-description {
+      margin-top: 50px;      
+    }
   }
 }
 .page--disabled {
