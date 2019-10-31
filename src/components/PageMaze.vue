@@ -8,6 +8,7 @@
         :pageInfo="item"
         :id="index"
         :currentCoords="currentCoords"
+        :colorScheme="colorScheme"
       />
     </div>
     <div class="page-maze-controller">
@@ -65,6 +66,9 @@ export default {
     mazeIndexTable: {
       type: Array,
       require: true
+    },
+    colorScheme: {
+      type: Array,
     }
   },
   data() {

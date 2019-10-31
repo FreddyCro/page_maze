@@ -6,7 +6,8 @@
     }"
     :style="{
       left: pagePosition[0],
-      top: pagePosition[1]
+      top: pagePosition[1],
+      backgroundColor: colorScheme[pageInfo.category - 1] + 99,
     }"
   >
     <div class="page-image">
@@ -55,6 +56,9 @@ export default {
       type: Object,
       required: true
     },
+    colorScheme: {
+      type: Array,
+    }
   },
   data() {
     return {
@@ -218,9 +222,6 @@ export default {
       function getRandomFloat(min, max) {
         return Math.random() * (max - min + 1) + min;
       }
-    },
-    handleParticlesMerge() {
-
     },
   },
   mounted() {
