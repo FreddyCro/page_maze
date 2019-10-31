@@ -242,7 +242,7 @@ export default {
     height: 50%;
     .page-image-complete {
       position: absolute;
-      top: 15%;
+      top: 36%;
       left: 0;
       width: 100%;
       height: 50vh;
@@ -251,6 +251,7 @@ export default {
     }
     .page-image-complete--active {
       opacity: 1;
+      transform: scale(1.2);
     }
     .page-image-canvas {
       transition: opacity 1s ease-in-out;    
